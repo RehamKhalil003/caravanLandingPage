@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caravan - Find Your Dream Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body[dir="rtl"] {
+            font-family: 'Segoe UI', 'Arial', 'Tahoma', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #E000A0, #600080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+        }
+
+        .logo img + .logo-text {
+            display: block;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(135deg, #E000A0, #600080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #E000A0;
+            background: transparent;
+            color: #E000A0;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #E000A0, #600080);
+            color: white;
+            border-color: transparent;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(224, 0, 160, 0.3);
+        }
+
+        /* Hero Section - Beautiful Redesign */
+        .hero {
+            min-height: 100vh;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(224, 0, 160, 0.85), rgba(96, 0, 128, 0.85));
+            z-index: -1;
+        }
+
+        /* Animated gradient overlay */
+        .hero-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(224, 0, 160, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(96, 0, 128, 0.3) 0%, transparent 50%);
+            animation: gradientShift 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Floating decorative elements */
+        .hero-decoration {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            filter: blur(80px);
+            animation: float 20s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .hero-decoration-1 {
+            top: -250px;
+            right: -250px;
+            animation-delay: 0s;
+        }
+
+        .hero-decoration-2 {
+            bottom: -250px;
+            left: -250px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(50px, 50px) scale(1.1);
+            }
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            width: 100%;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            width: fit-content;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-logo-container {
+            width: 100px;
+            height: 100px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInLeft 1s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-logo-small {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.5));
+        }
+
+        .hero-content {
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.8;
+            opacity: 0.95;
+            max-width: 600px;
+            font-weight: 400;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #E000A0, #600080);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(224, 0, 160, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(224, 0, 160, 0.6);
+        }
+
+        .cta-button-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-button-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: fadeInRight 1.2s ease;
+        }
+
+        .hero-logo-large {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5));
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 20px rgba(224, 0, 160, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(224, 0, 160, 0.6));
+            }
+        }
+
+        .hero-stats {
+            position: absolute;
+            bottom: 2rem;
+            left: 5%;
+            display: flex;
+            gap: 3rem;
+            z-index: 2;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInRight 1s ease;
+        }
+
+        .hero-logo-large {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Videos Section */
+        .videos-section {
+            padding: 5rem 5%;
+            background: #f8f9fa;
+        }
+
+        .videos-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-player {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-info h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #E000A0, #600080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .video-info p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #E000A0, #600080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            background: linear-gradient(135deg, #E000A0, #600080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Properties Section */
+        .properties {
+            padding: 5rem 5%;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .property-info {
+            padding: 1.5rem;
+        }
+
+        .property-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #E000A0, #600080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-location {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .property-details {
+            display: flex;
+            gap: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #E000A0, #600080);
+            color: white;
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            background: #f8f9fa;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #E000A0;
+            box-shadow: 0 0 0 3px rgba(224, 0, 160, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: #E000A0;
+            transform: translateY(-2px);
+        }
+
+        .social-links a svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #E000A0, #600080);
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .nav-links.mobile-active {
+            display: flex !important;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            gap: 0;
+        }
+
+        .nav-links.mobile-active li {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-links.mobile-active a {
+            width: 100%;
+            display: block;
+        }
+
+        /* RTL Support */
+        body[dir="rtl"] .hero-container {
+            direction: rtl;
+        }
+
+        body[dir="rtl"] .hero-left {
+            text-align: right;
+        }
+
+        body[dir="rtl"] .hero-right {
+            text-align: left;
+        }
+
+        body[dir="rtl"] .hero-cta-group {
+            justify-content: flex-end;
+        }
+
+        body[dir="rtl"] nav {
+            direction: rtl;
+        }
+
+        body[dir="rtl"] .nav-right {
+            flex-direction: row-reverse;
+        }
+
+        body[dir="rtl"] .about-content {
+            direction: rtl;
+        }
+
+        body[dir="rtl"] .contact-content {
+            direction: rtl;
+        }
+
+        body[dir="rtl"] .form-group {
+            text-align: right;
+        }
+
+        body[dir="rtl"] .form-group input,
+        body[dir="rtl"] .form-group textarea {
+            text-align: right;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            .hero-left {
+                align-items: center;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                max-width: 100%;
+            }
+
+            .hero-decoration {
+                width: 300px;
+                height: 300px;
+            }
+
+            .hero-decoration-1 {
+                top: -150px;
+                right: -150px;
+            }
+
+            .hero-decoration-2 {
+                bottom: -150px;
+                left: -150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .lang-switcher {
+                margin-left: auto;
+                margin-right: 1rem;
+            }
+
+            .hero {
+                min-height: 100vh;
+                height: auto;
+                padding-top: 80px;
+                padding-bottom: 50px;
+            }
+
+            .hero-container {
+                padding: 2rem 5%;
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-badge {
+                font-size: 0.8rem;
+                padding: 0.5rem 1.2rem;
+            }
+
+            .hero-logo-container {
+                width: 80px;
+                height: 80px;
+                padding: 0.8rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            .hero-cta-group {
+                justify-content: center;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .features {
+                padding: 3rem 5%;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .properties {
+                padding: 3rem 5%;
+            }
+
+            .properties-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .videos-section {
+                padding: 3rem 5%;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .about {
+                padding: 3rem 5%;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact {
+                padding: 3rem 5%;
+            }
+
+            nav {
+                padding: 0.8rem 5%;
+            }
+
+            .logo {
+                height: 40px;
+            }
+
+            .social-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            footer {
+                padding: 1.5rem 5%;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .features,
+            .properties,
+            .about,
+            .contact {
+                padding: 2rem 3%;
+            }
+
+            .hero-logo-small {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <img src="1024.png" alt="Caravan Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span class="logo-text" data-i18n="nav.logoText">Caravan for Real Estate</span>
+        </div>
+        <div class="nav-right">
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
+            </div>
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                <li><a href="#features" data-i18n="nav.features">Features</a></li>
+                <li><a href="#properties" data-i18n="nav.videos">Videos</a></li>
+                <li><a href="#about" data-i18n="nav.about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Beautiful Redesign -->
+    <section id="home" class="hero">
+        <video class="hero-video" autoplay muted loop playsinline poster="SaveClip.App_581385636_1135871645366507_1883855888882790166_n.jpg">
+            <source src="SaveClip.App_AQOCEIuXZxaq89S0TMKIxYYxNwjKa6F1qvmpG_Qr8lnY2LSURzn2OFM_czJ7LB_sWjxzFuM_2ijHYNZpcJjThMECyr6WPQEJPKUUfZo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-decoration hero-decoration-1"></div>
+        <div class="hero-decoration hero-decoration-2"></div>
+        <div class="hero-container">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span>🏆</span>
+                    <span data-i18n="hero.badge">Leading Real Estate Platform</span>
+                </div>
+                <div class="hero-logo-container">
+                    <img src="1024.png" alt="Caravan Logo" class="hero-logo-small">
+                </div>
+                <div class="hero-content">
+                    <h1 data-i18n="hero.title">Find Your Dream Home Today</h1>
+                    <p data-i18n="hero.description">Discover premium properties and make your real estate dreams come true with كراڤان</p>
+                    <div class="hero-cta-group">
+                        <a href="#properties" class="cta-button" data-i18n="hero.cta">Explore Videos</a>
+                        <a href="#about" class="cta-button cta-button-secondary" data-i18n="hero.learnMore">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <img src="1024.png" alt="Caravan Logo" class="hero-logo-large">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title" data-i18n="features.title">Why Choose Caravan?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3 data-i18n="features.search.title">Smart Search</h3>
+                <p data-i18n="features.search.desc">Advanced search filters to find exactly what you're looking for. Filter by location, price, size, and more.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3 data-i18n="features.agents.title">Expert Agents</h3>
+                <p data-i18n="features.agents.desc">Work with certified real estate professionals who understand the market and are committed to your success.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 data-i18n="features.verified.title">Verified Listings</h3>
+                <p data-i18n="features.verified.desc">All properties are verified and inspected to ensure accuracy and quality. No surprises, just results.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 data-i18n="features.prices.title">Best Prices</h3>
+                <p data-i18n="features.prices.desc">Get the best deals with transparent pricing and no hidden fees. Compare options and save money.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 data-i18n="features.mobile.title">Mobile App</h3>
+                <p data-i18n="features.mobile.desc">Search and view properties on the go with our user-friendly mobile application available on all platforms.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 data-i18n="features.secure.title">Secure Transactions</h3>
+                <p data-i18n="features.secure.desc">Safe and secure payment processing with full documentation and legal support throughout the process.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="properties" class="videos-section">
+        <div class="videos-container">
+            <h2 class="section-title" data-i18n="videos.title">Featured Videos</h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <video class="video-player" controls playsinline poster="thumbnail1.jpg">
+                        <source src="vedio1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3 data-i18n="videos.video1.title">Premium Properties Showcase</h3>
+                        <p data-i18n="videos.video1.desc">Explore our latest collection of luxury real estate properties</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <video class="video-player" controls playsinline poster="thumbnail2.jpg">
+                        <source src="vedio2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3 data-i18n="videos.video2.title">Virtual Property Tours</h3>
+                        <p data-i18n="videos.video2.desc">Take a virtual tour of our featured properties from anywhere</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <video class="video-player" controls playsinline poster="thumbnail3.jpg">
+                        <source src="vedio3.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3 data-i18n="videos.video3.title">Expert Real Estate Tips</h3>
+                        <p data-i18n="videos.video3.desc">Learn from our experienced agents about buying and selling properties</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <video class="video-player" controls playsinline poster="thumbnail4.jpg">
+                        <source src="vedio4.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3 data-i18n="videos.video4.title">Luxury Home Features</h3>
+                        <p data-i18n="videos.video4.desc">Discover the premium features and amenities in our luxury properties</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <video class="video-player" controls playsinline poster="thumnail5.jpg">
+                        <source src="vedio5.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3 data-i18n="videos.video5.title">Property Investment Guide</h3>
+                        <p data-i18n="videos.video5.desc">Learn about smart real estate investment strategies and opportunities</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <video class="video-player" controls playsinline poster="thumbnail6.jpg">
+                        <source src="vedio6.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3 data-i18n="videos.video6.title">Neighborhood Insights</h3>
+                        <p data-i18n="videos.video6.desc">Get insights about the best neighborhoods and locations for your next home</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <div>
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop" alt="Real Estate Team" class="about-image">
+            </div>
+            <div class="about-text">
+                <h2 data-i18n="about.title">About Caravan</h2>
+                <p data-i18n="about.p1">Caravan is a leading real estate platform connecting buyers, sellers, and renters with their perfect properties. With over 10 years of experience in the market, we've helped thousands of families find their dream homes.</p>
+                <p data-i18n="about.p2">Our mission is to make real estate transactions simple, transparent, and stress-free. We combine cutting-edge technology with personalized service to deliver exceptional results for our clients.</p>
+                <p data-i18n="about.p3">Whether you're buying your first home, selling a property, or looking for the perfect rental, Caravan is here to guide you every step of the way.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://www.facebook.com/share/1AYcqSFMD7/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                Facebook
+            </a>
+            <a href="https://www.instagram.com/caravan_real_estate?igsh=MWsyMWJ2M2tzdnljNA==" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                Instagram
+            </a>
+        </div>
+        <p data-i18n="footer.copyright">&copy; 2024 Caravan Real Estate. All rights reserved.</p>
+        <p data-i18n="footer.contact">Phone: +962 7 9598 6039</p>
+    </footer>
+
+    <script>
+        // Translation data
+        const translations = {
+            en: {
+                nav: {
+                    home: "Home",
+                    features: "Features",
+                    properties: "Properties",
+                    videos: "Videos",
+                    about: "About",
+                    contact: "Contact",
+                    logoText: "Caravan for Real Estate"
+                },
+                hero: {
+                    badge: "Leading Real Estate Platform",
+                    title: "Find Your Dream Home Today",
+                    description: "Discover premium properties and make your real estate dreams come true with Caravan",
+                    cta: "Explore Videos",
+                    learnMore: "Learn More"
+                },
+                videos: {
+                    title: "Featured Videos",
+                    video1: {
+                        title: "Premium Properties Showcase",
+                        desc: "Explore our latest collection of luxury real estate properties"
+                    },
+                    video2: {
+                        title: "Virtual Property Tours",
+                        desc: "Take a virtual tour of our featured properties from anywhere"
+                    },
+                    video3: {
+                        title: "Expert Real Estate Tips",
+                        desc: "Learn from our experienced agents about buying and selling properties"
+                    },
+                    video4: {
+                        title: "Luxury Home Features",
+                        desc: "Discover the premium features and amenities in our luxury properties"
+                    },
+                    video5: {
+                        title: "Property Investment Guide",
+                        desc: "Learn about smart real estate investment strategies and opportunities"
+                    },
+                    video6: {
+                        title: "Neighborhood Insights",
+                        desc: "Get insights about the best neighborhoods and locations for your next home"
+                    }
+                },
+                features: {
+                    title: "Why Choose Caravan?",
+                    search: {
+                        title: "Smart Search",
+                        desc: "Advanced search filters to find exactly what you're looking for. Filter by location, price, size, and more."
+                    },
+                    agents: {
+                        title: "Expert Agents",
+                        desc: "Work with certified real estate professionals who understand the market and are committed to your success."
+                    },
+                    verified: {
+                        title: "Verified Listings",
+                        desc: "All properties are verified and inspected to ensure accuracy and quality. No surprises, just results."
+                    },
+                    prices: {
+                        title: "Best Prices",
+                        desc: "Get the best deals with transparent pricing and no hidden fees. Compare options and save money."
+                    },
+                    mobile: {
+                        title: "Mobile App",
+                        desc: "Search and view properties on the go with our user-friendly mobile application available on all platforms."
+                    },
+                    secure: {
+                        title: "Secure Transactions",
+                        desc: "Safe and secure payment processing with full documentation and legal support throughout the process."
+                    }
+                },
+                properties: {
+                    title: "Featured Properties",
+                    "1": { title: "Luxury Modern Villa" },
+                    "2": { title: "Contemporary Family Home" },
+                    "3": { title: "Penthouse Apartment" },
+                    "4": { title: "Beachfront Paradise" },
+                    "5": { title: "Mountain View Estate" },
+                    "6": { title: "Downtown Loft" },
+                    beds: "🛏️ 4 Beds",
+                    baths: "🚿 3 Baths",
+                    sqft: "📐 3,500 sqft"
+                },
+                about: {
+                    title: "About Caravan",
+                    p1: "Caravan is a leading real estate platform connecting buyers, sellers, and renters with their perfect properties. With over 10 years of experience in the market, we've helped thousands of families find their dream homes.",
+                    p2: "Our mission is to make real estate transactions simple, transparent, and stress-free. We combine cutting-edge technology with personalized service to deliver exceptional results for our clients.",
+                    p3: "Whether you're buying your first home, selling a property, or looking for the perfect rental, Caravan is here to guide you every step of the way."
+                },
+                contact: {
+                    title: "Get In Touch",
+                    description: "Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+                    name: "Full Name",
+                    namePlaceholder: "John Doe",
+                    email: "Email Address",
+                    emailPlaceholder: "john@example.com",
+                    phone: "Phone Number",
+                    phonePlaceholder: "+1 (555) 123-4567",
+                    message: "Message",
+                    messagePlaceholder: "Tell us how we can help you...",
+                    submit: "Send Message"
+                },
+                footer: {
+                    copyright: "© 2024 Caravan Real Estate. All rights reserved.",
+                    contact: "Phone: +962 7 9598 6039"
+                }
+            },
+            ar: {
+                nav: {
+                    home: "الرئيسية",
+                    features: "المميزات",
+                    properties: "العقارات",
+                    videos: "الفيديوهات",
+                    about: "من نحن",
+                    contact: "اتصل بنا",
+                    logoText: "كراڤان للعقارات"
+                },
+                hero: {
+                    badge: "منصة عقارية رائدة",
+                    title: "ابحث عن منزل أحلامك اليوم",
+                    description: "اكتشف العقارات المميزة وحقق أحلامك العقارية مع كراڤان",
+                    cta: "استكشف الفيديوهات",
+                    learnMore: "اعرف المزيد"
+                },
+                videos: {
+                    title: "فيديوهات مميزة",
+                    video1: {
+                        title: "عرض العقارات الفاخرة",
+                        desc: "استكشف مجموعتنا الأخيرة من العقارات الفاخرة"
+                    },
+                    video2: {
+                        title: "جولات عقارية افتراضية",
+                        desc: "خذ جولة افتراضية لعقاراتنا المميزة من أي مكان"
+                    },
+                    video3: {
+                        title: "نصائح عقارية من الخبراء",
+                        desc: "تعلم من وكلائنا ذوي الخبرة حول شراء وبيع العقارات"
+                    },
+                    video4: {
+                        title: "مميزات المنازل الفاخرة",
+                        desc: "اكتشف المميزات والمرافق الفاخرة في عقاراتنا المميزة"
+                    },
+                    video5: {
+                        title: "دليل الاستثمار العقاري",
+                        desc: "تعلم عن استراتيجيات وفرص الاستثمار العقاري الذكية"
+                    },
+                    video6: {
+                        title: "معلومات عن الأحياء",
+                        desc: "احصل على معلومات عن أفضل الأحياء والمواقع لمنزلك القادم"
+                    }
+                },
+                features: {
+                    title: "لماذا تختار كراڤان؟",
+                    search: {
+                        title: "بحث ذكي",
+                        desc: "مرشحات بحث متقدمة للعثور على ما تبحث عنه بالضبط. تصفية حسب الموقع والسعر والحجم والمزيد."
+                    },
+                    agents: {
+                        title: "وكلاء خبراء",
+                        desc: "اعمل مع محترفي العقارات المعتمدين الذين يفهمون السوق وملتزمون بنجاحك."
+                    },
+                    verified: {
+                        title: "قوائم موثقة",
+                        desc: "جميع العقارات موثقة ومفحوصة لضمان الدقة والجودة. لا مفاجآت، فقط نتائج."
+                    },
+                    prices: {
+                        title: "أفضل الأسعار",
+                        desc: "احصل على أفضل الصفقات بأسعار شفافة وبدون رسوم خفية. قارن الخيارات ووفر المال."
+                    },
+                    mobile: {
+                        title: "تطبيق الجوال",
+                        desc: "ابحث وعرض العقارات أثناء التنقل مع تطبيقنا السهل الاستخدام المتاح على جميع المنصات."
+                    },
+                    secure: {
+                        title: "معاملات آمنة",
+                        desc: "معالجة آمنة ومأمونة للمدفوعات مع توثيق كامل ودعم قانوني طوال العملية."
+                    }
+                },
+                properties: {
+                    title: "عقارات مميزة",
+                    "1": { title: "فيلا حديثة فاخرة" },
+                    "2": { title: "منزل عائلي عصري" },
+                    "3": { title: "شقة بنتهاوس" },
+                    "4": { title: "جنة على الشاطئ" },
+                    "5": { title: "عقار بإطلالة جبلية" },
+                    "6": { title: "شقة في وسط المدينة" },
+                    beds: "🛏️ 4 غرف",
+                    baths: "🚿 3 حمامات",
+                    sqft: "📐 3,500 قدم مربع"
+                },
+                about: {
+                    title: "عن كراڤان",
+                    p1: "كراڤان هي منصة عقارية رائدة تربط المشترين والبائعين والمستأجرين بعقاراتهم المثالية. مع أكثر من 10 سنوات من الخبرة في السوق، ساعدنا آلاف العائلات في العثور على منازل أحلامهم.",
+                    p2: "مهمتنا هي جعل المعاملات العقارية بسيطة وشفافة وخالية من الإجهاد. نجمع بين التكنولوجيا المتطورة والخدمة الشخصية لتقديم نتائج استثنائية لعملائنا.",
+                    p3: "سواء كنت تشتري منزلك الأول، أو تبيع عقارًا، أو تبحث عن إيجار مثالي، كراڤان هنا لإرشادك في كل خطوة على الطريق."
+                },
+                contact: {
+                    title: "تواصل معنا",
+                    description: "لديك أسئلة؟ نحب أن نسمع منك. أرسل لنا رسالة وسنرد في أقرب وقت ممكن.",
+                    name: "الاسم الكامل",
+                    namePlaceholder: "أحمد محمد",
+                    email: "عنوان البريد الإلكتروني",
+                    emailPlaceholder: "ahmed@example.com",
+                    phone: "رقم الهاتف",
+                    phonePlaceholder: "+966 50 123 4567",
+                    message: "الرسالة",
+                    messagePlaceholder: "أخبرنا كيف يمكننا مساعدتك...",
+                    submit: "إرسال الرسالة"
+                },
+                footer: {
+                    copyright: "© 2024 كراڤان للعقارات. جميع الحقوق محفوظة.",
+                    contact: "الهاتف: +962 7 9598 6039"
+                }
+            }
+        };
+
+        // Language switching
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update all text content
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                const keys = key.split('.');
+                let value = translations[lang];
+                for (const k of keys) {
+                    value = value?.[k];
+                }
+                if (value) el.textContent = value;
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                const keys = key.split('.');
+                let value = translations[lang];
+                for (const k of keys) {
+                    value = value?.[k];
+                }
+                if (value) el.placeholder = value;
+            });
+        }
+
+        // Initialize language
+        setLanguage(currentLang);
+
+        // Language switcher buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                setLanguage(btn.dataset.lang);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.getElementById('navLinks');
+        const nav = document.querySelector('nav');
+
+        if (mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('mobile-active');
+                this.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            const navLinksItems = navLinks.querySelectorAll('a');
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('mobile-active');
+                    mobileMenuToggle.classList.remove('active');
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideNav = nav.contains(event.target);
+                if (!isClickInsideNav && navLinks.classList.contains('mobile-active')) {
+                    navLinks.classList.remove('mobile-active');
+                    mobileMenuToggle.classList.remove('active');
+                }
+            });
+        }
+
+        // Pause all other videos when one video starts playing
+        const allVideos = document.querySelectorAll('.video-player');
+        allVideos.forEach(video => {
+            video.addEventListener('play', function() {
+                // Pause all other videos
+                allVideos.forEach(otherVideo => {
+                    if (otherVideo !== video && !otherVideo.paused) {
+                        otherVideo.pause();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
