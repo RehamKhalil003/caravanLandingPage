@@ -79,6 +79,18 @@
             gap: 2rem;
         }
 
+        /* Ensure nav-links are visible on desktop */
+        @media (min-width: 969px) {
+            .nav-links:not(.mobile-active) {
+                display: flex !important;
+            }
+            body[dir="ltr"] .mobile-menu-toggle,
+            body[dir="rtl"] .mobile-menu-toggle,
+            body:not([dir]) .mobile-menu-toggle {
+                display: none !important;
+            }
+        }
+
         .nav-links a {
             text-decoration: none;
             color: #333;
@@ -744,6 +756,8 @@
             flex-direction: column;
             cursor: pointer;
             gap: 5px;
+            z-index: 1001;
+            position: relative;
         }
 
         .mobile-menu-toggle span {
@@ -800,6 +814,26 @@
 
         body[dir="rtl"] .nav-right {
             flex-direction: row-reverse;
+        }
+
+        body[dir="rtl"] .nav-links.mobile-active {
+            right: 0;
+            left: auto;
+        }
+
+        /* Ensure mobile menu toggle is visible in both languages */
+        body[dir="ltr"] .mobile-menu-toggle,
+        body[dir="rtl"] .mobile-menu-toggle,
+        body:not([dir]) .mobile-menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 968px) {
+            body[dir="ltr"] .mobile-menu-toggle,
+            body[dir="rtl"] .mobile-menu-toggle,
+            body:not([dir]) .mobile-menu-toggle {
+                display: flex !important;
+            }
         }
 
         body[dir="rtl"] .about-content {
@@ -861,18 +895,16 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+        @media (max-width: 968px) {
+            .nav-links:not(.mobile-active) {
+                display: none !important;
             }
 
-            .mobile-menu-toggle {
-                display: flex;
-            }
-
-            .lang-switcher {
-                margin-left: auto;
-                margin-right: 1rem;
+            /* Mobile menu toggle visibility - ensure it works in both languages */
+            body[dir="ltr"] .mobile-menu-toggle,
+            body[dir="rtl"] .mobile-menu-toggle,
+            body:not([dir]) .mobile-menu-toggle {
+                display: flex !important;
             }
 
             .hero {
